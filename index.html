@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Web Font Performance</title>
+
+		<meta name="description" content="A Fasterize presentation">
+		<meta name="author" content="Fasterize">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/fasterize.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section data-background="assets/Bridge.jpg">
+					<div style="display: table; height: 1150px; overflow: hidden;margin: 0px auto;">
+						<div style="display: table-cell; vertical-align: middle;">
+							<div>
+								<h1>Web Font Performance</h1>
+								<img src="assets/logo_fasterize_white.svg" style="width:10em" />
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="slides-left" data-background="#164B6F">
+					<span class="cat-title">Presentation</span>
+					<h2>I'm Anthony BARRE</h2>
+					<div class="border"></div>
+					<div class="content">
+						<ul style="list-style-type: none;">
+							<li>I'm a full stack developer at Fasterize</li>
+							<li>twitter : @AnthoBarre</li>
+							<li>github : abarre</li>
+						</ul>
+						<ul style="list-style-type: none;">
+							<li><img src="assets/logo_fasterize_white.svg" style="width:15em"></li>
+							<li>Fasterize is an all-in-one website accelerator.</li>
+							<li>It is an automated web performance optimization service (SAAS) used by many high traffic websites. <br />
+									Fasterized websites are already HTTP/2 enabled and take fully part of the next gen web.
+							</li>
+						</ul>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">General concept</span>
+					<h2>Stats from HTTP archive April 2017</h2>
+					<div class="border"></div>
+					<div class="content">
+						<div style="width:50%; float:right;">
+							<img src="assets/web-font-performance/font-1.png" />
+							<img src="assets/web-font-performance/font-2.png" />
+						</div>
+						<div style="width:50%;">
+							<ul style="font-size:40px">
+								<li><strong>99kb</strong> of font transfer size</li>
+								<li>around <strong>3</strong> font requests</li>
+								<li><strong>67%</strong> of sites using web fonts</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">General concept</span>
+					<h2>Stats from Fasterize Feb 2017</h2>
+					<div class="border"></div>
+					<div class="content">
+						<p>We looked at the font loading performed by our main customers in the french ecommerce</p>
+						<img src="assets/web-font-performance/ecommerce-fr-1.png" width="80%" />
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">General concept</span>
+					<h2>Stats from Fasterize Feb 2017</h2>
+					<div class="border"></div>
+					<div class="content">
+						<p>Test with and without loading the fonts</p>
+						<img src="assets/web-font-performance/ecommerce-fr-2.png" width="80%" />
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">General concept</span>
+					<h2>Trigger a font dowload :</h2>
+					<div class="border"></div>
+					<div class="content">
+						<p>A web font is only downloaded when it is used in a CSS selector that matches a DOM connected node with text.</p>
+						<img src="assets/web-font-performance/trigger-font-download-2.png" width="50%">
+						<p>Caution : variation italic and bold trigger different font weight.</p>
+						<p>The browser choose the format according to the ordered list of sources</p>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">General concept</span>
+					<h2>Behavior while downloading a font</h2>
+					<div class="border"></div>
+					<div class="content">
+						<img src="assets/web-font-performance/waterfall.png" />
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">General concept</span>
+					<h2>Behavior while downloading a font</h2>
+					<div class="border"></div>
+					<div class="content">
+						<img src="assets/web-font-performance/fout-foit.png" />
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">General concept</span>
+					<h2>Behavior while downloading a font</h2>
+					<div class="border"></div>
+					<div class="content">
+						<img src="assets/web-font-performance/foit-behavior.png" />
+						<ul>
+							<li>Loading a font on Safari is a SPOF</li>
+							<li>Nice default in term of performance for Microsoft browsers</li>
+							<li>Default timeout of 3sec is very long.</li>
+							<li>Bandwidth is consummed during the critical path.</li>
+						</ul>
+						<br />
+						<h1 style="text-align:center">FOUT is progressive enhancement</h1>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">General concept</span>
+					<h2>Use only system fonts</h2>
+					<div class="border"></div>
+					<div class="content">
+						<div style="width:50%; float:right; padding:20px;">
+							<img src="assets/web-font-performance/font-system.png" />
+							<img src="assets/web-font-performance/01-modern-system-fonts.png" />
+						</div>
+						<div style="width:50%; padding:20px;">
+							<p>Major websites moved from custom fonts to system fonts.</p>
+							<ul>
+								<li><a href="https://medium.design/system-shock-6b1dc6d6596f">medium</a></li>
+								<li><a href="https://make.wordpress.org/core/2016/07/07/native-fonts-in-4-6/">Wordpress 4.6</a></li>
+								<li>ghost</li>
+								<li>github</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">General concept</span>
+					<h2>Reduce the size of Font files</h2>
+					<div class="border"></div>
+					<div class="content">
+						<h2>New bulletproof @font-face: WOFF + WOFF2. Done.</h2>
+						<img src="assets/web-font-performance/woff2.png">
+						<h2>Subsettings : keep latin subset and unicode-range descriptor</h2>
+						<img src="assets/web-font-performance/subsetting.png">
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">Optimization</span>
+					<h2>1 - font-display</h2>
+					<div class="border"></div>
+					<div class="content">
+						<img src="assets/web-font-performance/font-display.png" />
+						<ul>
+							<li><code>Font-display:block</code> hide the text until the font is loaded (FOIT)</li>
+							<li><code>Font-display:swap</code> show fallback font until the font is loaded (FOUT)</li>
+							<li><code>Font-display:fallback</code> will replace the fallback font only within a timeout</li>
+							<li><code>Font-display:optional</code> will load the font only if cached</li>
+						</ul>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">Optimization</span>
+					<h2>1 - font-display</h2>
+					<div class="border"></div>
+					<div class="content">
+						<div style="width:45%; float:right; padding:20px;">
+							<h2>Cons</h2>
+							<ul>
+								<li>Browser support for this is still limited.</li>
+								<li>Limited flexibility: No way to group requests or repaints</li>
+							</ul>
+						</div>
+						<div style="width:45%; padding:20px;">
+							<h2>Pros</h2>
+							<ul>
+								<li>Chrome 60 will support it without flags</li>
+								<li>Very Simple: Only a single CSS descriptor added to your @font-face block.</li>
+								<li>Good rendering performance ( this would give us FOUT without any JS required)</li>
+								<li>Super future friendly: is orthogonal to web font formats</li>
+								<li>Does not require modification of the fonts</li>
+							</ul>
+						</div>
+						<h1>VERDICT: NO HARM IN ADDING NOW, BUT NOT SUFFICIENT FOR THE MOMENT.</h1>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">Optimization</span>
+					<h2>2 - preload fonts</h2>
+					<div class="border"></div>
+					<div class="content">
+						<img src="assets/web-font-performance/preload.png" />
+						<img src="assets/web-font-performance/waterfall-preload.png" />
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">Optimization</span>
+					<h2>2 - preload fonts</h2>
+					<div class="border"></div>
+					<div class="content">
+						<div style="width:45%; float:right; padding:20px;">
+							<h2>Cons</h2>
+							<ul>
+								<li>Browser support for this is still limited. (Blink only)</li>
+								<li>Scalability: The more you preload, the more you can block initial render</li>
+								<li>Flexibility: no way to group repaints/reflows.</li>
+							</ul>
+						</div>
+						<div style="width:45%; padding:20px;">
+							<h2>Pros</h2>
+							<ul>
+								<li>Super easy to implement</li>
+								<li>Future friendly if you use the type attribute to specify the font format.</li>
+								<li>Better rendering performance than a @font-face block.</li>
+								<li>Super future friendly: is orthogonal to web font formats</li>
+								<li>Does not require modification of the fonts</li>
+							</ul>
+						</div>
+						<h1>VERDICT: NOT SUFFICIENT BY ITSELF.</h1>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">Optimization</span>
+					<h2>3 - FOUT with class</h2>
+					<div class="border"></div>
+					<div class="content">
+						<h2> Trigger a font download with the CSS Font Loading API</h2>
+						<h2> Observe font download in CSS via the Font Face Observer lib</h2>
+						<img src="assets/web-font-performance/JS-font-loading.png" style="width:60%" />
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">Optimization</span>
+					<h2>3 - FOUT with class</h2>
+					<div class="border"></div>
+					<div class="content">
+						<div style="width:45%; float:right; padding:20px;">
+							<h2>Cons</h2>
+							<ul>
+								<li>Requires strict maintenance/control of your CSS.</li>
+								<li>Typically requires you to hard code which web fonts you want to load on the page.</li>
+							</ul>
+						</div>
+						<div style="width:45%; padding:20px;">
+							<h2>Pros</h2>
+							<ul>
+								<li>Rendering performance: Eliminates FOIT.</li>
+								<li>Flexibility: Easy to group requests into a single repaint</li>
+								<li>Scalability: Requests happen in parallel.</li>
+								<li>Great browser support</li>
+								<li>Does not require modification of the fonts</li>
+							</ul>
+						</div>
+						<h1>VERDICT: THIS IS THE BASELINE STANDARD. THIS WILL WORK FOR MOST USE CASES.</h1>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">Optimization</span>
+					<h2>4 - inline/preload critical FONT subset and lazyload the full font in an external CSS</h2>
+					<div class="border"></div>
+					<div class="content">
+						<h2>The ultimate goal is to avoid FOIT and mostly eliminate FOUT.</h2>
+						<ul>
+							<li>Create a critical FONT with a regular weight, normal style and containing A-Z and optionally 0-9 and/or punctuation)</li>
+							<li>Lazyload other weights and styles and take advantage of faux-bold and faux-italic content (using font synthesis)</li>
+						</ul>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">Optimization</span>
+					<h2>4 - inline/preload critical FONT subset and lazyload the full font in an external CSS</h2>
+					<div class="border"></div>
+					<div class="content">
+						<div style="width:50%; float:right; padding:20px;">
+							<img src="assets/web-font-performance/foft2.png" width="80%" /><br />
+						</div>
+						<div style="width:50%; padding:20px;">
+							<img src="assets/web-font-performance/foft1.png" width="80%" /><br />
+						</div>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">Optimization</span>
+					<h2>4 - inline/preload critical FONT subset and lazyload the full font in an external CSS</h2>
+					<div class="border"></div>
+					<div class="content">
+						<img src="assets/web-font-performance/foft3.png" width="70%" /><br />
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">Optimization</span>
+					<h2>4 - inline/preload critical FONT subset and lazyload the full font in an external CSS</h2>
+					<div class="border"></div>
+					<div class="content">
+						<div style="width:45%; float:right; padding:20px;">
+							<h2>Cons</h2>
+							<ul>
+								<li>Need to manage the cache to avoid extra critical font loading for repeat view</li>
+								<li>Introduce a flash of false-text</li>
+								<li>Hard to automate.</li>
+								<li>License restriction: Requires subsetting.</li>
+							</ul>
+						</div>
+						<div style="width:45%; padding:20px;">
+							<h2>Pros</h2>
+							<ul>
+								<li>All advantage of the FOUT with class</li>
+								<li>Greately reduce the FOUT for the Roman font</li>
+								<li>Greately reduce the bandwidth consummed during the critical rendering path</li>
+							</ul>
+						</div>
+						<h1>VERDICT: THIS IS THE CURRENT GOLD STANDARD.</h1>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">Anti Pattern</span>
+					<h2>Inlining full fonts</h2>
+					<div class="border"></div>
+					<div class="content">
+						<img src="assets/web-font-performance/inlining.png" width="70%"/>
+						<img src="assets/web-font-performance/inlining-waterfall.png" width="70%"/>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">Anti Pattern</span>
+					<h2>Inlining full fonts</h2>
+					<div class="border"></div>
+					<div class="content">
+						<div style="width:45%; float:right; padding:20px;">
+							<h2>Cons</h2>
+							<ul>
+								<li>Breaks parallel downloads</li>
+								<li>Saturate bandwidth during the critical path</li>
+								<li>No progressive rendering</li>
+								<li>No cachign</li>
+							</ul>
+						</div>
+						<div style="width:45%; padding:20px;">
+							<h2>Pros</h2>
+							<ul>
+								<li>Seemingly great rendering performance: this approach has no FOUT or FOIT.</li>
+								<li>Robustness: inlining puts all your eggs into your initial server request</li>
+								<li>No HTTP overhead</li>
+							</ul>
+						</div>
+						<h1>VERDICT: AVOID THIS ANTI-PATTERN.</h1>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">Conclusion</span>
+					<h2></h2>
+					<div class="border"></div>
+					<div class="content">
+						<ol style="font-size: 30px;">
+							<li>Fonts are enhancement</li>
+							<li>The default browser behavior for font-loading is harmful to the perceived performance</li>
+							<li>FOUT is a progressive enhancement</li>
+							<li>Be prepared for the future : font-display and link rel="preload" of the regular fonts</li>
+							<li>FOUT with class offers a good threshold</li>
+						</ol>
+					</div>
+				</section>
+
+				<section data-background="assets/Bridge.jpg">
+					<div style="display: table; height: 1150px; overflow: hidden;;margin: 0px auto;">
+						<div style="display: table-cell; vertical-align: middle;">
+							<div>
+								<h1>Web Font Optimization</h1>
+								<h3>Questions ?</h3>
+								<img src="assets/logo_fasterize_white.svg" style="width:10em" />
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<div class="icon-bar">
+			<!-- <img src="assets/logo_fasterize_white.svg"/> -->
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: false,
+				progress: true,
+				history: true,
+				center: false,
+    		slideNumber:true,
+
+				transition: 'none', // none/fade/slide/convex/concave/zoom
+				margin: 0.1,
+				minScale: 0.8,
+    		maxScale: 1.3,
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+		</script>
+
+	</body>
+</html>
