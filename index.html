@@ -54,6 +54,7 @@
 					<h2>I'm Anthony BARRE</h2>
 					<div class="border"></div>
 					<div class="content">
+						<img src="assets/web-font-performance/abarre.jpeg" style="float:right"/>
 						<ul style="list-style-type: none;">
 							<li>I'm a full stack developer at Fasterize</li>
 							<li>twitter : @AnthoBarre</li>
@@ -65,6 +66,28 @@
 							<li>It is an automated web performance optimization service (SAAS) used by many high traffic websites. <br />
 									Fasterized websites are already HTTP/2 enabled and take fully part of the next gen web.
 							</li>
+						</ul>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#164B6F">
+					<span class="cat-title">Presentation</span>
+					<h2>Plan</h2>
+					<div class="border"></div>
+					<div class="content">
+						<h2>What is the state of the art for font optimization ?</h2>
+						<p>The presentation is based on works of studies done at Fasterize</p>
+						<ul style="list-style-type: none;">
+							<div style="width:50%; float:right;">
+								<li>
+									Analysis based on work of Zach Leatherman
+									<img src="assets/web-font-performance/zachleat.png" width="70%" />
+								</li>
+							</div>
+							<div style="width:50%;">
+								<li>Analysis based on work of Bram Stein
+								<img src="assets/web-font-performance/bram-stein-cssconfEU.jpg" /></li>
+							</div>
 						</ul>
 					</div>
 				</section>
@@ -110,13 +133,13 @@
 
 				<section class="slides-left" data-background="#272822">
 					<span class="cat-title">General concept</span>
-					<h2>Trigger a font dowload :</h2>
+					<h2>Trigger a font download</h2>
 					<div class="border"></div>
 					<div class="content">
 						<p>A web font is only downloaded when it is used in a CSS selector that matches a DOM connected node with text.</p>
 						<img src="assets/web-font-performance/trigger-font-download-2.png" width="50%">
-						<p>Caution : variation italic and bold trigger different font weight.</p>
-						<p>The browser choose the format according to the ordered list of sources</p>
+						<p>Caution: italic and bold variations trigger different font download.</p>
+						<p>The browser chooses the format according to the ordered list of sources</p>
 					</div>
 				</section>
 
@@ -145,10 +168,10 @@
 					<div class="content">
 						<img src="assets/web-font-performance/foit-behavior.png" />
 						<ul>
-							<li>Loading a font on Safari is a SPOF</li>
+							<li>Loading font on Safari is kind of a SPOF</li>
 							<li>Nice default in term of performance for Microsoft browsers</li>
-							<li>Default timeout of 3sec is very long.</li>
-							<li>Bandwidth is consummed during the critical path.</li>
+							<li>Default timeout of 3 sec is very long</li>
+							<li>Bandwidth is consumed during the critical path</li>
 						</ul>
 						<br />
 						<h1 style="text-align:center">FOUT is progressive enhancement</h1>
@@ -167,8 +190,8 @@
 						<div style="width:50%; padding:20px;">
 							<p>Major websites moved from custom fonts to system fonts.</p>
 							<ul>
-								<li><a href="https://medium.design/system-shock-6b1dc6d6596f">medium</a></li>
-								<li><a href="https://make.wordpress.org/core/2016/07/07/native-fonts-in-4-6/">Wordpress 4.6</a></li>
+								<li>medium</li>
+								<li>Wordpress 4.6</li>
 								<li>ghost</li>
 								<li>github</li>
 							</ul>
@@ -194,11 +217,77 @@
 					<div class="border"></div>
 					<div class="content">
 						<img src="assets/web-font-performance/font-display.png" />
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">Optimization</span>
+					<h2>1 - font-display</h2>
+					<div class="border"></div>
+					<div class="content">
+						<img src="assets/web-font-performance/block.png" />
 						<ul>
-							<li><code>Font-display:block</code> hide the text until the font is loaded (FOIT)</li>
-							<li><code>Font-display:swap</code> show fallback font until the font is loaded (FOUT)</li>
-							<li><code>Font-display:fallback</code> will replace the fallback font only within a timeout</li>
-							<li><code>Font-display:optional</code> will load the font only if cached</li>
+							<li><code style="padding:10px">font-display: block</code> hides the text until the font is loaded (FOIT)</li>
+						</ul>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">Optimization</span>
+					<h2>1 - font-display</h2>
+					<div class="border"></div>
+					<div class="content">
+						<img src="assets/web-font-performance/swap.png" />
+						<ul>
+							<li><code style="padding:10px">font-display: swap</code> shows fallback font until the font is loaded (FOUT)</li>
+						</ul>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">Optimization</span>
+					<h2>1 - font-display</h2>
+					<div class="border"></div>
+					<div class="content">
+						<img src="assets/web-font-performance/fallback.png" />
+						<ul>
+							<li><code style="padding:10px">font-display: fallback</code> will replace the fallback font only within a timeout</li>
+						</ul>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">Optimization</span>
+					<h2>1 - font-display</h2>
+					<div class="border"></div>
+					<div class="content">
+						<img src="assets/web-font-performance/fallback2.png" />
+						<ul>
+							<li><code style="padding:10px">font-display: fallback</code> will replace the fallback font only within a timeout</li>
+						</ul>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">Optimization</span>
+					<h2>1 - font-display</h2>
+					<div class="border"></div>
+					<div class="content">
+						<img src="assets/web-font-performance/optional.png" />
+						<ul>
+							<li><code style="padding:10px">font-display: optional</code> will load the font only if cached</li>
+						</ul>
+					</div>
+				</section>
+
+				<section class="slides-left" data-background="#272822">
+					<span class="cat-title">Optimization</span>
+					<h2>1 - font-display</h2>
+					<div class="border"></div>
+					<div class="content">
+						<img src="assets/web-font-performance/optional-cache.png" width="80%"/>
+						<ul>
+							<li><code style="padding:10px">font-display: optional</code> will load the font only if cached</li>
 						</ul>
 					</div>
 				</section>
@@ -211,21 +300,21 @@
 						<div style="width:45%; float:right; padding:20px;">
 							<h2>Cons</h2>
 							<ul>
-								<li>Browser support for this is still limited.</li>
-								<li>Limited flexibility: No way to group requests or repaints</li>
+								<li>Browser support still limited.</li>
+								<li>Limited flexibility: no way to group requests or repaints</li>
 							</ul>
 						</div>
 						<div style="width:45%; padding:20px;">
 							<h2>Pros</h2>
 							<ul>
 								<li>Chrome 60 will support it without flags</li>
-								<li>Very Simple: Only a single CSS descriptor added to your @font-face block.</li>
-								<li>Good rendering performance ( this would give us FOUT without any JS required)</li>
+								<li>Very simple: only a single CSS descriptor added to your @font-face block</li>
+								<li>Good rendering performance (this would give us FOUT without any JS required)</li>
 								<li>Super future friendly: is orthogonal to web font formats</li>
-								<li>Does not require modification of the fonts</li>
+								<li>Does not require fonts modification</li>
 							</ul>
 						</div>
-						<h1>VERDICT: NO HARM IN ADDING NOW, BUT NOT SUFFICIENT FOR THE MOMENT.</h1>
+						<h1>VERDICT: NO HARM IN ADDING NOW, BUT NOT ENOUGH FOR THE MOMENT.</h1>
 					</div>
 				</section>
 
@@ -247,22 +336,22 @@
 						<div style="width:45%; float:right; padding:20px;">
 							<h2>Cons</h2>
 							<ul>
-								<li>Browser support for this is still limited. (Blink only)</li>
-								<li>Scalability: The more you preload, the more you can block initial render</li>
-								<li>Flexibility: no way to group repaints/reflows.</li>
+								<li>Browser support still limited. (Blink only)</li>
+								<li>Network congestion: the more you preload, the more you can block initial render</li>
+								<li>Flexibility: no way to group repaints/reflows</li>
 							</ul>
 						</div>
 						<div style="width:45%; padding:20px;">
 							<h2>Pros</h2>
 							<ul>
 								<li>Super easy to implement</li>
-								<li>Future friendly if you use the type attribute to specify the font format.</li>
-								<li>Better rendering performance than a @font-face block.</li>
+								<li>Future friendly if you use the type attribute to specify the font format</li>
+								<li>Better rendering performance than a @font-face block</li>
 								<li>Super future friendly: is orthogonal to web font formats</li>
-								<li>Does not require modification of the fonts</li>
+								<li>Does not require fonts modification</li>
 							</ul>
 						</div>
-						<h1>VERDICT: NOT SUFFICIENT BY ITSELF.</h1>
+						<h1>VERDICT: NOT SUFFICIENT</h1>
 					</div>
 				</section>
 
@@ -271,8 +360,8 @@
 					<h2>3 - FOUT with class</h2>
 					<div class="border"></div>
 					<div class="content">
-						<h2> Trigger a font download with the CSS Font Loading API</h2>
-						<h2> Observe font download in CSS via the Font Face Observer lib</h2>
+						<h2> 1. Trigger a font download with the CSS Font Loading API</h2>
+						<h2> 2. Observe font download in CSS via the Font Face Observer lib</h2>
 						<img src="assets/web-font-performance/JS-font-loading.png" style="width:60%" />
 					</div>
 				</section>
@@ -285,21 +374,21 @@
 						<div style="width:45%; float:right; padding:20px;">
 							<h2>Cons</h2>
 							<ul>
-								<li>Requires strict maintenance/control of your CSS.</li>
-								<li>Typically requires you to hard code which web fonts you want to load on the page.</li>
+								<li>Requires strict maintenance/control of your CSS</li>
+								<li>Typically requires you to hard code which web fonts you want to load on the page</li>
 							</ul>
 						</div>
 						<div style="width:45%; padding:20px;">
 							<h2>Pros</h2>
 							<ul>
-								<li>Rendering performance: Eliminates FOIT.</li>
-								<li>Flexibility: Easy to group requests into a single repaint</li>
-								<li>Scalability: Requests happen in parallel.</li>
+								<li>Rendering performance: eliminates FOIT.</li>
+								<li>Flexibility: easy to group requests into a single repaint</li>
+								<li>Scalability: requests happen in parallel</li>
 								<li>Great browser support</li>
 								<li>Does not require modification of the fonts</li>
 							</ul>
 						</div>
-						<h1>VERDICT: THIS IS THE BASELINE STANDARD. THIS WILL WORK FOR MOST USE CASES.</h1>
+						<h1>VERDICT: THIS IS THE BASELINE STANDARD. THIS WILL WORK FOR MOST USE CASES</h1>
 					</div>
 				</section>
 
@@ -310,8 +399,8 @@
 					<div class="content">
 						<h2>The ultimate goal is to avoid FOIT and mostly eliminate FOUT.</h2>
 						<ul>
-							<li>Create a critical FONT with a regular weight, normal style and containing A-Z and optionally 0-9 and/or punctuation)</li>
-							<li>Lazyload other weights and styles and take advantage of faux-bold and faux-italic content (using font synthesis)</li>
+							<li>Create a critical FONT with a romain weight, normal style and containing A-Z and optionally 0-9 and/or punctuation)</li>
+							<li>Lazyload other weights and styles and take advantages of faux-bold and faux-italic content (using font synthesis)</li>
 						</ul>
 					</div>
 				</section>
@@ -347,18 +436,18 @@
 						<div style="width:45%; float:right; padding:20px;">
 							<h2>Cons</h2>
 							<ul>
-								<li>Need to manage the cache to avoid extra critical font loading for repeat view</li>
-								<li>Introduce a flash of false-text</li>
-								<li>Hard to automate.</li>
-								<li>License restriction: Requires subsetting.</li>
+								<li>Needs to manage the cache to avoid extra critical font loading for repeat view</li>
+								<li>Introduces a flash of false-text</li>
+								<li>Hard to automate</li>
+								<li>License restriction: requires subsetting</li>
 							</ul>
 						</div>
 						<div style="width:45%; padding:20px;">
 							<h2>Pros</h2>
 							<ul>
-								<li>All advantage of the FOUT with class</li>
-								<li>Greately reduce the FOUT for the Roman font</li>
-								<li>Greately reduce the bandwidth consummed during the critical rendering path</li>
+								<li>All advantages of the FOUT with class</li>
+								<li>Greately reduces the FOUT for the Roman font</li>
+								<li>Greately reduces the bandwidth consumed during the critical rendering path</li>
 							</ul>
 						</div>
 						<h1>VERDICT: THIS IS THE CURRENT GOLD STANDARD.</h1>
@@ -384,9 +473,9 @@
 							<h2>Cons</h2>
 							<ul>
 								<li>Breaks parallel downloads</li>
-								<li>Saturate bandwidth during the critical path</li>
+								<li>Saturates bandwidth during the critical path</li>
 								<li>No progressive rendering</li>
-								<li>No cachign</li>
+								<li>No caching</li>
 							</ul>
 						</div>
 						<div style="width:45%; padding:20px;">
@@ -397,7 +486,6 @@
 								<li>No HTTP overhead</li>
 							</ul>
 						</div>
-						<h1>VERDICT: AVOID THIS ANTI-PATTERN.</h1>
 					</div>
 				</section>
 
@@ -407,11 +495,11 @@
 					<div class="border"></div>
 					<div class="content">
 						<ol style="font-size: 30px;">
-							<li>Fonts are enhancement</li>
-							<li>The default browser behavior for font-loading is harmful to the perceived performance</li>
-							<li>FOUT is a progressive enhancement</li>
-							<li>Be prepared for the future : font-display and link rel="preload" of the regular fonts</li>
-							<li>FOUT with class offers a good threshold</li>
+							<li class="fragment" style="margin: 20px;">Fonts are enhancement</li>
+							<li class="fragment" style="margin: 20px;">The default browser behavior for font-loading is harmful to the perceived performance</li>
+							<li class="fragment" style="margin: 20px;">FOUT is a progressive enhancement</li>
+							<li class="fragment" style="margin: 20px;">Be prepared for the future : font-display and link rel="preload" of the regular fonts</li>
+							<li class="fragment" style="margin: 20px;">FOUT with class offers a good threshold</li>
 						</ol>
 					</div>
 				</section>
